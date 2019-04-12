@@ -19,3 +19,154 @@ functions:
       - http:
           method: get
           path: hello
+
+resources:  # CloudFormation template syntax
+  Resources:
+    recipeTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: recipeTable
+        AttributeDefinitions:
+          - AttributeName: recipeName
+            AttributeType: S
+        KeySchema:
+          - AttributeName: recipeId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    deviceTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: devices
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: status
+            AttributeType: S
+          - AttributeName: semantic_id
+            AttributeType: S
+          - AttributeName: pour_code
+            AttributeType: S
+          - AttributeName: vendor
+            AttributeType: N      
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    ordersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: orders
+        AttributeDefinitions:
+          - AttributeName: status
+            AttributeType: S
+          - AttributeName: price
+            AttributeType: N
+          - AttributeName: cost
+            AttributeType: N
+          - AttributeName: recipe
+            AttributeType: N  
+          - AttributeName: consumer
+            AttributeType: S
+          - AttributeName: vendor
+            AttributeType: N
+          - AttributeName: device
+            AttributeType: N    
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    vendorsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: vendors
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: semantic_id
+            AttributeType: S
+          - AttributeName: image
+            AttributeType: S   
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    categoriesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: categories
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S 
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    productTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: products
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: volume
+            AttributeType: N
+          - AttributeName: proof
+            AttributeType: N
+          - AttributeName: ingredient
+            AttributeType: N      
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    ingredientsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ingredients
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S 
+          - AttributeName: alcoholic
+            AttributeType: B 
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    recipesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: recipes
+        AttributeDefinitions:
+          - AttributeName: status
+            AttributeType: S
+          - AttributeName: price
+            AttributeType: N
+          - AttributeName: description
+            AttributeType: S
+          - AttributeName: instructions
+            AttributeType: S  
+          - AttributeName: image
+            AttributeType: S   
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    S3BucketmrBartenderAssets:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName:
