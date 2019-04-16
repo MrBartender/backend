@@ -1,20 +1,29 @@
 const AWS = require('aws-sdk');
+const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
-export const get = (_event: any, _context: any, cb) => {
-  var db = new AWS.DynamoDB.DocumentClient();
+module.exports.get = (event, context, callback) => {
+  const eventData = JSON.parse(event.body);
+  const pathData = JSON.parse(event.pathParameters)
+  const id = pathData.id;
+  console.log(id);
+  console.log("FOX")
+  console.log(eventData);
   var params = {
     TableName : 'recipes',
   };
-  var objs : any;
-  console.log(objs);
-  db.scan(params, function(err, data) {
-    if (err) console.log(err);
-    else objs = data;
-  });
-  const response = {
-    statusCode: 201,
-    objs,
-  };
+  dynamoDB.scan(params, (error, result) => {
+    // handle potential errors
+    if (error) {
+      console.error(error)
+      callback(new Error('INTERNAL'))
+      return
+    }
 
-  cb(null, response);
+    // create a response
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify(result)
+    }
+    callback(null, response)
+  })
 }

@@ -32,13 +32,17 @@ functions:
     events:
       - http:
           method: get
-          path: hello
+          path: drink/{id}
+          request:
+            parameters:
+              paths:
+                id: true
   getOrder:
     handler: src/order.get
     events:
       - http:
           method: get
-          path: getAllOrders
+          path: order
 
 resources:  # CloudFormation template syntax
   Resources:
